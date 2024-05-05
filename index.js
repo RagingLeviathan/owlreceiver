@@ -22,20 +22,24 @@ app.get('/authorize', (req, res) => {
 
 // Callback endpoint to handle the authorization response
 app.get('/callback', async (req, res) => {
-    const code = req.query.code; // Authorization code received in the callback
+    try {
+        const code = req.query.code;
 
-    console.log('authorization code got is: ', code);
-    // Exchange the authorization code for an access token
-    accessToken = await exchangeCodeForToken(code);
+        console.log('authorization code got is: ', code);
 
-    console.log('accesstoken obtained is:' , accessToken);
+        accessToken = await exchangeCodeForToken(code);
 
-    // Send the access token to the Discord bot
-    const webhookUrl = 'https://discord.com/api/webhooks/1236663645786603611/eK41zlrFrjcemT5vuHQ08il2PKfUCLFVp9frLz8kMMsSXgIw0LpVgJ77UaqqDQQ1AX7a'; // Replace with your actual webhook URL
-    await axios.post(webhookUrl, { content: `Access token: ${accessToken}` });
-    
-     res.send('Authorization successful! You can now use your bot.'); // Send a response to the user
- });
+        console.log('accesstoken obtained is:' , accessToken);
+
+        const webhookUrl = 'https://discord.com/api/webhooks/1236663645786603611/eK41zlrFrjcemT5vuHQ08il2PKfUCLFVp9frLz8kMMsSXgIw0LpVgJ77UaqqDQQ1AX7a';
+        await axios.post(webhookUrl, { content: `Access token: ${accessToken}` });
+
+        res.send('Authorization successful! You can now use your bot.');
+    } catch (error) {
+        console.error('Error in /callback:', error);
+        res.status(500).send('An error occurred.');
+    }
+});
 
 // Function to exchange authorization code for an access token
 async function exchangeCodeForToken(code) {
