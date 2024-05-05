@@ -6,7 +6,7 @@ const app = express();
 // Replace these with your actual values
 const CLIENT_ID = process.env.CONSUMER_KEY;
 const CLIENT_SECRET = process.env.CONSUMER_SECRET;
-const REDIRECT_URI = 'http://your-server-domain.com:3000/callback';
+const REDIRECT_URI = 'https://owlreceiver.onrender.com:3000/callback';
 
 // Endpoint to initiate the authorization process
 app.get('/authorize', (req, res) => {
