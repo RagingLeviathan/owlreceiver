@@ -2,6 +2,8 @@ const express = require('express');
 const crypto = require('crypto');
 const axios = require('axios');
 const app = express();
+const session = require('express-session');
+
 
 // Replace these with your actual values
 const CLIENT_ID = process.env.CONSUMER_KEY;
@@ -28,10 +30,12 @@ app.get('/callback', async (req, res) => {
 
     console.log('accesstoken obtained is:' , accessToken);
 
-    // Handle the access token accordingly (e.g., store it securely, make API calls)
+    // Send the access token to the Discord bot
+    const webhookUrl = 'https://discord.com/api/webhooks/1236663645786603611/eK41zlrFrjcemT5vuHQ08il2PKfUCLFVp9frLz8kMMsSXgIw0LpVgJ77UaqqDQQ1AX7a'; // Replace with your actual webhook URL
+    await axios.post(webhookUrl, { content: `Access token: ${accessToken}` });
     
-    res.send('Authorization successful! You can now use your bot.'); // Send a response to the user
-});
+     res.send('Authorization successful! You can now use your bot.'); // Send a response to the user
+ });
 
 // Function to exchange authorization code for an access token
 async function exchangeCodeForToken(code) {
